@@ -1,0 +1,305 @@
+openapi: 3.0.3
+info:
+  title: Wazapbro V2 API
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: https://api-v2.wazapbro.com
+  - url: http://localhost
+paths:
+  /msg/api/v2/outbond/template/send:
+    post:
+      tags:
+        - Send Templated Message
+      summary: Body Only (Without Variables)
+      description: Body Only (Without Variables)
+      operationId: bodyOnlyWithoutVariables
+      parameters:
+        - name: token
+          in: header
+          schema:
+            type: string
+            example: dCll53kUbIhhww8gad0bkicwKGnqn0jhSgyBxZ1Jy4Ngd1jFhQeWGeeBSZk2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attributes:
+                  type: object
+                  properties:
+                    header:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            example: image
+                          url:
+                            type: string
+                            example: >-
+                              https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg
+                      example:
+                        - type: image
+                          url: >-
+                            https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg
+                recipient:
+                  type: string
+                  example: '6285712834903'
+                template_id:
+                  type: string
+                  example: 031d1090-39a2-4e36-bd11-40ed2ddbffe7
+            examples:
+              Body Only (Without Variables):
+                value:
+                  recipient: '6285712834903'
+                  template_id: 61ed290c-1256-4922-8366-3df963d54b69
+              With Body Variables:
+                value:
+                  attributes:
+                    body:
+                      - Johndoe
+                      - Semarang
+                  recipient: '6285712834903'
+                  template_id: 69f08433-9d97-40ef-bd11-d18f74475357
+              With Header Image:
+                value:
+                  attributes:
+                    header:
+                      - type: image
+                        url: >-
+                          https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg
+                  recipient: '6285712834903'
+                  template_id: 031d1090-39a2-4e36-bd11-40ed2ddbffe7
+              With Header Text Variable:
+                value:
+                  attributes:
+                    header:
+                      - text: Danang
+                        type: text
+                  recipient: '6285712834903'
+                  template_id: 69f08433-9d97-40ef-bd11-d18f74475357
+      responses:
+        '200':
+          description: ''
+  /api/v2/outbond/template/send:
+    post:
+      tags:
+        - Send Templated Message
+      summary: With Header Document
+      description: With Header Document
+      operationId: withHeaderDocument
+      parameters:
+        - name: token
+          in: header
+          schema:
+            type: string
+            example: 4vOAL1c9gVNUCS0flPW6vOfrnuiu29GPkRkzZK2YmZyhbpaSmlkPgi4Kvj1Q
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attributes:
+                  type: object
+                  properties:
+                    body:
+                      type: array
+                      items:
+                        type: string
+                        example: Nanang
+                      example:
+                        - Nanang
+                        - Rabu
+                        - 28 Mei 2025
+                        - 12:00 WIB
+                        - Bukitsari
+                    buttons:
+                      type: array
+                      items:
+                        type: string
+                        example: DEF782
+                      example:
+                        - DEF782
+                    header:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            example: image
+                          url:
+                            type: string
+                            example: >-
+                              https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg
+                      example:
+                        - type: image
+                          url: >-
+                            https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg
+                recipient:
+                  type: string
+                  example: '6285165815497'
+                schedule:
+                  type: string
+                  example: 26-05-2025 17:03
+                template_id:
+                  type: string
+                  example: d29b0bbf-6f9e-4b2c-ace0-8bc6f4ed8694
+            examples:
+              Mixed Payload (Include Header, Body Variable, Scheduled ):
+                value:
+                  attributes:
+                    body:
+                      - Nanang
+                      - Rabu
+                      - 28 Mei 2025
+                      - 12:00 WIB
+                      - Bukitsari
+                    buttons:
+                      - DEF782
+                    header:
+                      - type: image
+                        url: >-
+                          https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg
+                  recipient: '6285165815497'
+                  schedule: 26-05-2025 17:03
+                  template_id: d29b0bbf-6f9e-4b2c-ace0-8bc6f4ed8694
+              Scheduled:
+                value:
+                  attributes:
+                    header:
+                      - type: image
+                        url: >-
+                          https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg
+                  recipient: '6285712834903'
+                  schedule: 26-05-2025 17:03
+                  template_id: 031d1090-39a2-4e36-bd11-40ed2ddbffe7
+              With Buttons - CTA Dynamic URL:
+                value:
+                  attributes:
+                    buttons:
+                      - value123
+                  recipient: '6285712834903'
+                  template_id: 800a3a44-7774-43ac-8658-92ff6b4d8eaf
+              With Buttons - OTP Copy Code:
+                value:
+                  attributes:
+                    body:
+                      - '123456'
+                    buttons:
+                      - '123456'
+                  recipient: '6285712834903'
+                  template_id: 3381512a-727b-42a4-9a6d-f281e04715c9
+              With Header Document:
+                value:
+                  attributes:
+                    body:
+                      - Coba
+                    header:
+                      - filename: abc.pdf
+                        type: document
+                        url: >-
+                          https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf
+                  recipient: '6285712834903'
+                  template_id: 95d03335-76e4-40c6-b919-58d5850c0eb7
+              With Header Video:
+                value:
+                  attributes:
+                    header:
+                      - type: video
+                        url: >-
+                          https://file-examples.com/storage/fef89e64ba6830bdb9f04b4/2017/04/file_example_MP4_480_1_5MG.mp4
+                  recipient: '6285712834903'
+                  template_id: 07c2972c-d71e-4d5a-bfee-8c4660bbfb05
+      responses:
+        '200':
+          description: ''
+  /api/v2/outbond/template/msg/status:
+    get:
+      tags:
+        - Send Templated Message
+      summary: Check Message Status
+      description: Check Message Status
+      operationId: checkMessageStatus
+      parameters:
+        - name: token
+          in: header
+          schema:
+            type: string
+            example: 4vOAL1c9gVNUCS0flPW6vOfrnuiu29GPkRkzZK2YmZyhbpaSmlkPgi4Kvj1Q
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                attributes:
+                  type: object
+                  properties:
+                    body:
+                      type: array
+                      items:
+                        type: string
+                        example: Nanang
+                      example:
+                        - Nanang
+                        - Rabu
+                        - 28 Mei 2025
+                        - 12:00 WIB
+                        - Bukitsari
+                    buttons:
+                      type: array
+                      items:
+                        type: string
+                        example: DEF782
+                      example:
+                        - DEF782
+                    header:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            example: image
+                          url:
+                            type: string
+                            example: >-
+                              https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg
+                      example:
+                        - type: image
+                          url: >-
+                            https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg
+                recipient:
+                  type: string
+                  example: '6285712834903'
+                template_id:
+                  type: string
+                  example: 800a3a44-7774-43ac-8658-92ff6b4d8eaf
+            examples:
+              Check Message Status:
+                value:
+                  attributes:
+                    body:
+                      - Nanang
+                      - Rabu
+                      - 28 Mei 2025
+                      - 12:00 WIB
+                      - Bukitsari
+                    buttons:
+                      - DEF782
+                    header:
+                      - type: image
+                        url: >-
+                          https://upload.wikimedia.org/wikipedia/commons/9/9e/Placeholder_Person.jpg
+                  recipient: '6285712834903'
+                  template_id: 800a3a44-7774-43ac-8658-92ff6b4d8eaf
+      responses:
+        '200':
+          description: ''
+tags:
+  - name: Send Templated Message
